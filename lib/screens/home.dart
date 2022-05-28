@@ -28,6 +28,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   var header = TextEditingController();
 
+  bool showheader = false;
+
   @override
   void initState() {
     super.initState();
@@ -77,147 +79,202 @@ class _MyHomePageState extends State<MyHomePage> {
 
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      // backgroundColor: ,
       //You should use `Scaffold` if you have `TextField` in body.
       //Otherwise on focus your `TextField` won`t scroll when keyboard popup.
       body: SafeArea(
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: size.height * 0.2,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.blueAccent,
+            gradient: LinearGradient(
+                colors: [Color.fromARGB(255, 19, 36, 133), Colors.blueAccent]),
+          ),
+          child: Center(
+            child: Container(
+              width: size.width * 0.9,
+              height: size.height * 0.9,
+              child: ListView(
+                // mainAxisAlignment: MainAxisAlignment.start,
+                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    children: [
-                      button(
-                          height: 40,
-                          onPressed: () {
-                            footer.clear();
-                            header.clear();
-                            urdutext.clear();
-                          },
-                          text: "Create new project",
-                          width: 150),
-                      button(
-                          onPressed: () {},
-                          text: "save as pdf",
-                          height: 40,
-                          width: 150),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      button(
-                          onPressed: _startListening,
-                          text: "listen",
-                          height: 40,
-                          width: 150),
-                      button(
-                          onPressed: _stopListening,
-                          text: " Stop listen",
-                          height: 40,
-                          width: 150),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Container(
-                        width: 150,
-                        child: TextFormField(
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp('[0-9.,]+')),
-                          ],
-                          controller: fontsize,
-                          decoration:
-                              InputDecoration(hintText: "Enter font size"),
-                        ),
-                      ),
-                      button(
-                          onPressed: () {
-                            var c = double.parse(fontsize.text);
-                            siz = c;
-                            print(siz);
-                            setState(() {});
-                          },
-                          height: 40,
-                          width: 150,
-                          text: "Font Size"),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
-            // docs page
-            Container(
-              height: MediaQuery.of(context).size.height * 0.8,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
                   Container(
-                    padding: const EdgeInsets.all(18.0),
-                    color: Colors.white,
-                    alignment: Alignment.center,
-                    child: TextFormField(
-                      controller: header,
-                      decoration: InputDecoration(labelText: "Header"),
-                      style: TextStyle(fontSize: 30),
-                    ),
-                  ),
-
-                  //Body Container
-                  Expanded(
-                    child: Container(
-                      color: Colors.white,
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Column(
-                          children: <Widget>[
+                    height: size.height * 0.2,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: button(
+                                  height: 40,
+                                  onPressed: () {
+                                    footer.clear();
+                                    header.clear();
+                                    urdutext.clear();
+                                  },
+                                  text: "Create new project",
+                                  width: 150),
+                            ),
+                            button(
+                                onPressed: () {},
+                                text: "save as pdf",
+                                height: 40,
+                                width: 150),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: button(
+                                  onPressed: _startListening,
+                                  text: "listen",
+                                  height: 40,
+                                  width: 150),
+                            ),
+                            button(
+                                onPressed: _stopListening,
+                                text: " Stop listen",
+                                height: 40,
+                                width: 150),
+                          ],
+                        ),
+                        Column(
+                          children: [
                             Container(
-                              color: Colors.white,
-                              // height: 200.0,
-                              alignment: Alignment.center,
+                              width: 150,
                               child: TextFormField(
-                                maxLines: null,
-                                textInputAction: TextInputAction.next,
-                                controller: urdutext,
-                                // If listening is active show the recognized words
-                                // "$_lastWords",
-
-                                style: TextStyle(fontSize: siz.toDouble()),
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp('[0-9.,]+')),
+                                ],
+                                controller: fontsize,
+                                style: TextStyle(color: Colors.white),
+                                decoration: InputDecoration(
+                                    focusColor: Colors.white,
+                                    hoverColor: Colors.white,
+                                    hintText: "Enter font size",
+                                    hintStyle: TextStyle(
+                                      color: Colors.white,
+                                    )),
                               ),
                             ),
-                            // Text("$_lastWords")
-
-                            //TextField nearly at bottom
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: button(
+                                  onPressed: () {
+                                    var c = double.parse(fontsize.text);
+                                    siz = c;
+                                    print(siz);
+                                    setState(() {});
+                                  },
+                                  height: 40,
+                                  width: 150,
+                                  text: "Font Size"),
+                            ),
                           ],
                         ),
-                      ),
+                      ],
                     ),
                   ),
 
-                  //Footer Container
-                  //Here you will get unexpected behaviour when keyboard pops-up.
-                  //So its better to use `bottomNavigationBar` to avoid this.
+                  // docs page
                   Container(
-                    padding: const EdgeInsets.all(18.0),
-                    color: Colors.white,
-                    alignment: Alignment.center,
-                    child: TextFormField(
-                      controller: footer,
-                      decoration: const InputDecoration(labelText: "Footer"),
-                      style: const TextStyle(fontSize: 30),
+                    height: MediaQuery.of(context).size.height * 0.8,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        GestureDetector(
+                            onDoubleTap: () {
+                              showheader = true;
+
+                              setState(() {});
+                            },
+                            child: Container(
+                                padding: const EdgeInsets.all(18.0),
+                                color: Colors.white,
+                                alignment: Alignment.center,
+                                child: showheader
+                                    ? Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: TextFormField(
+                                          textAlign: TextAlign.right,
+                                          controller: header,
+                                          decoration: InputDecoration(
+                                              labelText: "Header"),
+                                          style: TextStyle(fontSize: 30),
+                                        ),
+                                      )
+                                    : Container())),
+
+                        //Body Container
+                        Expanded(
+                          child: Container(
+                            color: Colors.white,
+                            child: SingleChildScrollView(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 30.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    color: Colors.white,
+                                    // height: 200.0,
+                                    alignment: Alignment.center,
+                                    child: Directionality(
+                                      textDirection: TextDirection.rtl,
+                                      child: TextFormField(
+                                        textAlign: TextAlign.right,
+                                        maxLines: null,
+                                        textInputAction: TextInputAction.next,
+                                        controller: urdutext,
+                                        // If listening is active show the recognized words
+                                        // "$_lastWords",
+
+                                        style:
+                                            TextStyle(fontSize: siz.toDouble()),
+                                      ),
+                                    ),
+                                  ),
+                                  // Text("$_lastWords")
+
+                                  //TextField nearly at bottom
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        //Footer Container
+                        //Here you will get unexpected behaviour when keyboard pops-up.
+                        //So its better to use `bottomNavigationBar` to avoid this.
+                        Container(
+                            padding: const EdgeInsets.all(18.0),
+                            color: Colors.white,
+                            alignment: Alignment.center,
+                            child: showheader
+                                ? Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: TextFormField(
+                                      textAlign: TextAlign.right,
+                                      controller: footer,
+                                      decoration: const InputDecoration(
+                                          labelText: "Footer",
+                                          labelStyle: TextStyle()),
+                                      style: const TextStyle(fontSize: 30),
+                                    ),
+                                  )
+                                : Container()),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

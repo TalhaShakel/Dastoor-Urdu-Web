@@ -32,7 +32,7 @@ class button extends StatelessWidget {
               elevation: 3, //elevation of button
               shape: RoundedRectangleBorder(
                   //to set border radius to button
-                  borderRadius: BorderRadius.circular(30)),
+                  borderRadius: BorderRadius.circular(10)),
               padding: EdgeInsets.only(
                   bottom: 15,
                   left: 15,
