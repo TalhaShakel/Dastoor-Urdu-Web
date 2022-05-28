@@ -1,5 +1,6 @@
 import 'package:asaan_urdu/main.dart';
-import 'package:asaan_urdu/sigin.dart';
+import 'package:asaan_urdu/screens/home.dart';
+import 'package:asaan_urdu/screens/sigin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
