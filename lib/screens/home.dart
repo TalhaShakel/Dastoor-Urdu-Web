@@ -70,8 +70,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    _lastWords =
-        "کی دنیا بھر کی آنکھیں تو ابھی تک جواب نہیں ملی اور جو ڈاکٹر ہے وہ منتھلی 35000 کیا تمہارا میں ان سب میں سے تھوڑا اور میں منتقلی سے رابطہ کیا تم ہارو میرے پاس ایک اللہ پاک کا شکر ہے کہ میں نے اتنی سی عمر میں اتنا کمالیہ";
+    // _lastWords =
+    //     "کی دنیا بھر کی آنکھیں تو ابھی تک جواب نہیں ملی اور جو ڈاکٹر ہے وہ منتھلی 35000 کیا تمہارا میں ان سب میں سے تھوڑا اور میں منتقلی سے رابطہ کیا تم ہارو میرے پاس ایک اللہ پاک کا شکر ہے کہ میں نے اتنی سی عمر میں اتنا کمالیہ";
     var urdutext = TextEditingController(text: _lastWords.toString());
     _lastWords = urdutext.text;
     // var kamina = _lastWords;
