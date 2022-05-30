@@ -44,7 +44,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   /// Each time to start a speech recognition session
   void _startListening() async {
-    await _speechToText.listen(localeId: 'ur-PK', onResult: _onSpeechResult);
+    await _speechToText.listen(
+        listenFor: Duration(minutes: 1),
+        // onSoundLevelChange: null,
+        localeId: 'ur-PK',
+        onResult: _onSpeechResult);
     // _lastWords = urdutext.text;
     setState(() {});
   }
@@ -55,15 +59,20 @@ class _MyHomePageState extends State<MyHomePage> {
   /// listen method.
   void _stopListening() async {
     await _speechToText.stop();
+    urdutext.text = urdutext.text + _lastWords;
     setState(() {});
   }
 
   /// This is the callback that the SpeechToText plugin calls when
   /// the platform returns recognized words.
+  var urdutext = TextEditingController();
+  var urdutext2 = TextEditingController();
+
   void _onSpeechResult(SpeechRecognitionResult result) {
     setState(() {
       _lastWords = result.recognizedWords;
     });
+    urdutext2.text = _lastWords;
   }
 
   var siz = 12.1;
@@ -72,8 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     // _lastWords =
     //     "کی دنیا بھر کی آنکھیں تو ابھی تک جواب نہیں ملی اور جو ڈاکٹر ہے وہ منتھلی 35000 کیا تمہارا میں ان سب میں سے تھوڑا اور میں منتقلی سے رابطہ کیا تم ہارو میرے پاس ایک اللہ پاک کا شکر ہے کہ میں نے اتنی سی عمر میں اتنا کمالیہ";
-    var urdutext = TextEditingController(text: _lastWords.toString());
-    _lastWords = urdutext.text;
+    // var urdutext = TextEditingController(text: _lastWords.toString());
+    // _lastWords = urdutext.text;
     // var kamina = _lastWords;
     // urdutext.text = kamina;
 
@@ -220,6 +229,16 @@ class _MyHomePageState extends State<MyHomePage> {
                                   const EdgeInsets.symmetric(horizontal: 30.0),
                               child: Column(
                                 children: <Widget>[
+                                  TextFormField(
+                                    textAlign: TextAlign.center,
+                                    maxLines: null,
+                                    textInputAction: TextInputAction.next,
+                                    controller: urdutext2,
+                                    // If listening is active show the recognized words
+                                    // "$_lastWords",
+
+                                    style: TextStyle(fontSize: 25),
+                                  ),
                                   Container(
                                     color: Colors.white,
                                     // height: 200.0,

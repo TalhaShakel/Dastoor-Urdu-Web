@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "Dastoor",
       theme: ThemeData(
         // Define the default brightness and colors.
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       themeMode: ThemeMode.dark,
-      home: login(),
+      home: MyHomePage(),
     );
   }
 }
