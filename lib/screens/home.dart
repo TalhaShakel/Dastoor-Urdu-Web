@@ -138,16 +138,18 @@ class _MyHomePageState extends State<MyHomePage> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: button(
-                                  onPressed: _startListening,
+                                  onPressed: _speechToText.isNotListening
+                                      ? _startListening
+                                      : _stopListening,
                                   text: "listen",
                                   height: 40,
                                   width: 150),
                             ),
-                            button(
-                                onPressed: _stopListening,
-                                text: " Stop listen",
-                                height: 40,
-                                width: 150),
+                            // button(
+                            //     onPressed: _stopListening,
+                            //     text: " Stop listen",
+                            //     height: 40,
+                            // width: 150),
                           ],
                         ),
                         Column(
@@ -197,29 +199,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        GestureDetector(
-                            onDoubleTap: () {
-                              showheader = true;
-
-                              setState(() {});
-                            },
-                            child: Container(
-                                padding: const EdgeInsets.all(18.0),
-                                color: Colors.white,
-                                alignment: Alignment.center,
-                                child: showheader
-                                    ? Directionality(
-                                        textDirection: TextDirection.rtl,
-                                        child: TextFormField(
-                                          textAlign: TextAlign.right,
-                                          controller: header,
-                                          decoration: InputDecoration(
-                                              labelText: "Header"),
-                                          style: TextStyle(fontSize: 30),
-                                        ),
-                                      )
-                                    : Container())),
-
                         //Body Container
                         Expanded(
                           child: Container(
@@ -270,23 +249,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         //Footer Container
                         //Here you will get unexpected behaviour when keyboard pops-up.
                         //So its better to use `bottomNavigationBar` to avoid this.
-                        Container(
-                            padding: const EdgeInsets.all(18.0),
-                            color: Colors.white,
-                            alignment: Alignment.center,
-                            child: showheader
-                                ? Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: TextFormField(
-                                      textAlign: TextAlign.right,
-                                      controller: footer,
-                                      decoration: const InputDecoration(
-                                          labelText: "Footer",
-                                          labelStyle: TextStyle()),
-                                      style: const TextStyle(fontSize: 30),
-                                    ),
-                                  )
-                                : Container()),
                       ],
                     ),
                   ),
@@ -296,6 +258,13 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed:
+      //       // If not yet listening for speech start, otherwise stop
+      //       _speechToText.isNotListening ? _startListening : _stopListening,
+      //   tooltip: 'Listen',
+      //   child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic),
+      // ),
     );
   }
 }

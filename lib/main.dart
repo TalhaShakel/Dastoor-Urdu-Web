@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:asaan_urdu/screens/login.dart';
 import 'package:asaan_urdu/screens/home.dart';
+import 'package:asaan_urdu/screens/textbold.dart';
 import 'package:asaan_urdu/speach.dart';
 import 'package:asaan_urdu/widgets.dart';
 import 'package:flutter/material.dart';
