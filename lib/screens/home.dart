@@ -76,14 +76,19 @@ class _MyHomePageState extends State<MyHomePage> {
   String text = "Hello";
 
   Future<void> _createPDF() async {
-    urdutext3.text = "Hello";
+    text = "${urdutext2.text}";
+    print(text);
     try {
       //Create a PDF document
       PdfDocument document = PdfDocument();
       //Add a page and draw text
       PdfPage page = document.pages.add();
-      page.graphics.drawString('${text}',
-          PdfTrueTypeFont(io.File('Arial.ttf').readAsBytesSync(), 14),
+      page.graphics.drawString(
+          '${text}',
+          // PdfTrueTypeFont(
+          //     io.File('assets/Jameel Noori Nastaleeq.ttf').readAsBytesSync(),
+          //     14),
+          PdfStandardFont(PdfFontFamily.helvetica, 27),
           brush: PdfSolidBrush(PdfColor(0, 0, 0)),
           bounds: Rect.fromLTWH(
               0, 0, page.getClientSize().width, page.getClientSize().height),
@@ -103,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
               "data:application/octet-stream;charset=utf-16le;base64,${base64.encode(bytes)}")
         ..setAttribute("download", "output.pdf")
         ..click();
-      print("Theek ho giya");
+      print("Theek ho giya $text");
     } catch (e) {
       print("object" + e.toString());
     }
