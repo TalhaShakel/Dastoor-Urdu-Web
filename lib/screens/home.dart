@@ -1,8 +1,15 @@
+import 'dart:io' as io;
+
 import 'package:asaan_urdu/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'dart:convert';
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:html';
+// import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key}) : super(key: key);
@@ -29,6 +36,8 @@ class _MyHomePageState extends State<MyHomePage> {
   var header = TextEditingController();
 
   bool showheader = false;
+
+  var bold = false;
 
   @override
   void initState() {
@@ -61,6 +70,43 @@ class _MyHomePageState extends State<MyHomePage> {
     await _speechToText.stop();
     urdutext.text = urdutext.text + _lastWords;
     setState(() {});
+  }
+
+  var urdutext3 = TextEditingController();
+  String text = "Hello";
+
+  Future<void> _createPDF() async {
+    urdutext3.text = "Hello";
+    try {
+      //Create a PDF document
+      PdfDocument document = PdfDocument();
+      //Add a page and draw text
+      PdfPage page = document.pages.add();
+      page.graphics.drawString('${text}',
+          PdfTrueTypeFont(io.File('Arial.ttf').readAsBytesSync(), 14),
+          brush: PdfSolidBrush(PdfColor(0, 0, 0)),
+          bounds: Rect.fromLTWH(
+              0, 0, page.getClientSize().width, page.getClientSize().height),
+          format: PdfStringFormat(
+              textDirection: PdfTextDirection.rightToLeft,
+              alignment: PdfTextAlignment.right,
+              paragraphIndent: 35));
+      //Save the document
+      List<int> bytes = document.save();
+      //Dispose the document
+      document.dispose();
+
+      //Download the output file
+
+      AnchorElement(
+          href:
+              "data:application/octet-stream;charset=utf-16le;base64,${base64.encode(bytes)}")
+        ..setAttribute("download", "output.pdf")
+        ..click();
+      print("Theek ho giya");
+    } catch (e) {
+      print("object" + e.toString());
+    }
   }
 
   /// This is the callback that the SpeechToText plugin calls when
@@ -127,8 +173,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                   width: 150),
                             ),
                             button(
-                                onPressed: () {},
-                                text: "save as pdf",
+                                onPressed: () {
+                                  _createPDF();
+                                },
+                                text: "Download",
                                 height: 40,
                                 width: 150),
                           ],
@@ -145,11 +193,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                   height: 40,
                                   width: 150),
                             ),
-                            // button(
-                            //     onPressed: _stopListening,
-                            //     text: " Stop listen",
-                            //     height: 40,
-                            // width: 150),
+                            button(
+                                onPressed: () {
+                                  bold == false ? bold = true : bold = false;
+                                  setState(() {});
+                                },
+                                text: "Bold",
+                                height: 40,
+                                width: 150),
                           ],
                         ),
                         Column(
@@ -232,8 +283,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                         // If listening is active show the recognized words
                                         // "$_lastWords",
 
-                                        style:
-                                            TextStyle(fontSize: siz.toDouble()),
+                                        style: TextStyle(
+                                            fontWeight: bold
+                                                ? FontWeight.bold
+                                                : FontWeight.normal,
+                                            fontSize: siz.toDouble()),
                                       ),
                                     ),
                                   ),

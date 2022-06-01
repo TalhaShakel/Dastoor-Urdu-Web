@@ -1,126 +1,44 @@
-// import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
-// import 'package:speech_to_text/speech_recognition_result.dart';
-// import 'package:speech_to_text/speech_to_text.dart';
 
-// enum TextMode {
-//   normal,
-//   bold,
-//   italic,
-//   underline,
-//   // link,  <- I'm not sure what you want to have happen with this one
-// }
 
-// const normalStyle = TextStyle();
-// const boldStyle = TextStyle(fontWeight: FontWeight.bold);
-// const italicStyle = TextStyle(fontStyle: FontStyle.italic);
-// const underlineStyle = TextStyle(decoration: TextDecoration.underline);
-
-// // Helper method
-// TextStyle getStyle(TextMode mode) {
-//   switch (mode) {
-//     case TextMode.bold:
-//       return boldStyle;
-//     case TextMode.italic:
-//       return italicStyle;
-//     case TextMode.underline:
-//       return underlineStyle;
-//     default:
-//       return normalStyle;
-//   }
-// }
-
-// class MyHomePage extends StatefulWidget {
-//   MyHomePage({Key? key}) : super(key: key);
+// class tex extends StatefulWidget {
+//   tex({Key? key}) : super(key: key);
 
 //   @override
-//   _MyHomePageState createState() => _MyHomePageState();
+//   State<tex> createState() => _texState();
 // }
 
-// class _MyHomePageState extends State<MyHomePage> {
-//   SpeechToText _speechToText = SpeechToText();
-//   bool _speechEnabled = false;
-//   String _lastWords = '';
+// class _texState extends State<tex> {
+//   var text = TextEditingController();
 
-//   @override
-//   void initState() {
-//     super.initState();
-//     _initSpeech();
-//   }
-
-//   /// This has to happen only once per app
-//   void _initSpeech() async {
-//     _speechEnabled = await _speechToText.initialize();
-//     setState(() {});
-//   }
-
-//   /// Each time to start a speech recognition session
-//   void _startListening() async {
-//     await _speechToText.listen(onResult: _onSpeechResult);
-//     setState(() {});
-//   }
-
-//   /// Manually stop the active speech recognition session
-//   /// Note that there are also timeouts that each platform enforces
-//   /// and the SpeechToText plugin supports setting timeouts on the
-//   /// listen method.
-//   void _stopListening() async {
-//     await _speechToText.stop();
-//     setState(() {});
-//   }
-
-//   /// This is the callback that the SpeechToText plugin calls when
-//   /// the platform returns recognized words.
-//   void _onSpeechResult(SpeechRecognitionResult result) {
-//     setState(() {
-//       _lastWords = result.recognizedWords;
-//     });
-//   }
+//   bool bold = false;
 
 //   @override
 //   Widget build(BuildContext context) {
+//     text.text = "TAlha Shakeel";
 //     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Speech Demo'),
+//         body: Center(
+//       child: Column(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [
+//           ElevatedButton(
+//               onPressed: () {
+//                 _createPDF();
+
+//                 // bold == false ? bold = true : bold = false;
+//                 setState(() {});
+//               },
+//               child: Text("bold")),
+//           TextFormField(
+//             controller: text,
+//             // onChanged: TextSelection,
+//             style: TextStyle(
+//                 fontWeight: bold ? FontWeight.bold : FontWeight.normal),
+//           )
+//         ],
 //       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             Container(
-//               padding: EdgeInsets.all(16),
-//               child: Text(
-//                 'Recognized words:',
-//                 style: TextStyle(fontSize: 20.0),
-//               ),
-//             ),
-//             Expanded(
-//               child: Container(
-//                 padding: EdgeInsets.all(16),
-//                 child: Text(
-//                   // If listening is active show the recognized words
-//                   _speechToText.isListening
-//                       ? '$_lastWords'
-//                       // If listening isn't active but could be tell the user
-//                       // how to start it, otherwise indicate that speech
-//                       // recognition is not yet ready or not supported on
-//                       // the target device
-//                       : _speechEnabled
-//                           ? 'Tap the microphone to start listening...'
-//                           : 'Speech not available',
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed:
-//             // If not yet listening for speech start, otherwise stop
-//             _speechToText.isNotListening ? _startListening : _stopListening,
-//         tooltip: 'Listen',
-//         child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic),
-//       ),
-//     );
+//     ));
 //   }
+
+  
 // }
