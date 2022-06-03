@@ -2,26 +2,40 @@ import 'dart:developer';
 
 import 'package:asaan_urdu/screens/login.dart';
 import 'package:asaan_urdu/screens/home.dart';
-import 'package:asaan_urdu/screens/textbold.dart';
+import 'package:asaan_urdu/screens/ruff_work.dart';
 import 'package:asaan_urdu/speach.dart';
 import 'package:asaan_urdu/widgets.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  runApp(MyApp());
+  await Firebase.initializeApp();
+  try {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var login3 = prefs.getString("email");
+    print("Emaill pokaa :" + login3.toString());
+    runApp(MyApp(
+      home: login3 == null ? login() : MyHomePage(),
+    ));
+  } catch (e) {
+    print(e);
+  }
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  var home;
+
+  MyApp({Key? key, this.home}) : super(key: key);
 
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -46,7 +60,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       themeMode: ThemeMode.dark,
-      home: MyHomePage(),
+      home: home,
     );
   }
 }

@@ -77,18 +77,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _createPDF() async {
     text = "${urdutext2.text}";
-    print(text);
+    print(urdutext2.text);
     try {
-      //Create a PDF document
       PdfDocument document = PdfDocument();
-      //Add a page and draw text
       PdfPage page = document.pages.add();
       page.graphics.drawString(
-          '${text}',
-          // PdfTrueTypeFont(
-          //     io.File('assets/Jameel Noori Nastaleeq.ttf').readAsBytesSync(),
-          //     14),
-          PdfStandardFont(PdfFontFamily.helvetica, 27),
+          '${urdutext2.text}', PdfStandardFont(PdfFontFamily.helvetica, 20),
           brush: PdfSolidBrush(PdfColor(0, 0, 0)),
           bounds: Rect.fromLTWH(
               0, 0, page.getClientSize().width, page.getClientSize().height),
@@ -96,12 +90,8 @@ class _MyHomePageState extends State<MyHomePage> {
               textDirection: PdfTextDirection.rightToLeft,
               alignment: PdfTextAlignment.right,
               paragraphIndent: 35));
-      //Save the document
       List<int> bytes = document.save();
-      //Dispose the document
       document.dispose();
-
-      //Download the output file
 
       AnchorElement(
           href:

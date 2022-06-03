@@ -1,14 +1,40 @@
 import 'package:asaan_urdu/main.dart';
 import 'package:asaan_urdu/screens/home.dart';
 import 'package:asaan_urdu/screens/sigin.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class login extends StatelessWidget {
   login({Key? key}) : super(key: key);
-  TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  login2() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: email.text, password: password.text)
+          .then(
+              (value) => prefs.setString('email', value.user!.email.toString()))
+          .then((Value) => Get.to(MyHomePage()));
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: "$e",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -76,7 +102,7 @@ class login extends StatelessWidget {
                               }
                               return null;
                             },
-                            controller: nameController,
+                            controller: email,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'User Name',
@@ -96,7 +122,7 @@ class login extends StatelessWidget {
                               }
                             },
                             obscureText: true,
-                            controller: passwordController,
+                            controller: password,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Password',
@@ -126,10 +152,11 @@ class login extends StatelessWidget {
                               child: const Text('Login'),
                               onPressed: () {
                                 _formKey.currentState?.validate();
-                                // Get.to(MyHomePage());
+                                login2();
+
                                 print("textFieldsValue");
-                                print(nameController.text);
-                                print(passwordController.text);
+                                print(email.text);
+                                print(password.text);
                               },
                             )),
                         Padding(
